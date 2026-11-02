@@ -28,7 +28,7 @@
   }
 </script>
 <style>
-  /* Layout: 모바일 퍼스트 원페이지 — 사진 중심 세로 흐름, 하단 고정 예약바, 데스크톱에서 2~4열로 확장 */
+  /* Layout: 모바일 퍼스트 원페이지 — 사진 중심 세로 흐름, 하단 고정 예약바, 데스크톱에서 2~3열로 확장 */
   :root {
     --bg: #fbf8f3;          /* 살짝 따뜻한 오프화이트 */
     --surface: #ffffff;
@@ -70,31 +70,17 @@
 
   .hero-shade { background: linear-gradient(180deg, rgba(20,24,20,.15) 0%, rgba(20,24,20,.35) 45%, rgba(20,24,20,.82) 100%); }
 
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 52px; padding: 0 22px; border-radius: 999px; font-weight: 600; font-size: 15px; transition: transform .2s ease, background-color .2s ease, color .2s ease; }
+  .btn:active { transform: scale(.97); }
+  .btn:focus-visible, a:focus-visible, button:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; }
+
   /* 오렌지 슬라이스 모티프 */
   .slice { width: 64px; height: 64px; border-radius: 50%; background:
     repeating-conic-gradient(from 0deg, var(--orange) 0 26deg, #ffd3ae 26deg 30deg);
     box-shadow: inset 0 0 0 5px #ffd3ae, 0 0 0 4px var(--orange); }
 
-  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 52px; padding: 0 22px; border-radius: 999px; font-weight: 600; font-size: 15px; transition: transform .2s ease, background-color .2s ease, color .2s ease; }
-  .btn:active { transform: scale(.97); }
-  .btn:focus-visible, a:focus-visible, button:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; }
-
   .menu-card img { transition: transform .6s cubic-bezier(.2,.7,.2,1); }
   .menu-card:hover img { transform: scale(1.05); }
-
-  .map { background-color: #e9e4d8;
-    background-image:
-      linear-gradient(90deg, transparent 47%, #fff 47%, #fff 53%, transparent 53%),
-      linear-gradient(0deg, transparent 62%, #fff 62%, #fff 67%, transparent 67%),
-      linear-gradient(28deg, transparent 30%, #f7f3ea 30%, #f7f3ea 33%, transparent 33%),
-      linear-gradient(#d7e4cf, #d7e4cf);
-    background-size: 100% 100%, 100% 100%, 100% 100%, 34% 30%;
-    background-position: 0 0, 0 0, 0 0, 90% 12%;
-    background-repeat: no-repeat; }
-  :root[data-theme="dark"] .map { filter: brightness(.72) saturate(.9); }
-  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .map { filter: brightness(.72) saturate(.9); } }
-  .pin { animation: bob 2.4s ease-in-out infinite; }
-  @keyframes bob { 0%,100% { transform: translate(-50%, -100%); } 50% { transform: translate(-50%, -112%); } }
 
   .rise { animation: rise .8s cubic-bezier(.2,.7,.2,1) both; }
   .rise-2 { animation-delay: .12s; } .rise-3 { animation-delay: .24s; }
@@ -102,8 +88,7 @@
 
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    .rise, .pin { animation: none; }
-    .pin { transform: translate(-50%, -100%); }
+    .rise { animation: none; }
     .menu-card img { transition: none; }
   }
 
@@ -125,7 +110,6 @@
       <nav class="hidden md:flex items-center gap-8 text-[15px] font-medium text-ink" aria-label="주요 메뉴">
         <a href="#about" class="hover:text-orange transition-colors">브랜드</a>
         <a href="#menu" class="hover:text-orange transition-colors">메뉴</a>
-        <a href="#location" class="hover:text-orange transition-colors">오시는 길</a>
         <a href="https://booking.naver.com/" target="_blank" rel="noopener" class="btn !min-h-[42px] !px-5 bg-orange text-onorange">예약하기</a>
       </nav>
 
@@ -141,7 +125,6 @@
     <nav class="gutter py-4 flex flex-col" aria-label="모바일 메뉴">
       <a href="#about" class="py-4 text-lg font-medium text-ink border-b border-line">브랜드 이야기</a>
       <a href="#menu" class="py-4 text-lg font-medium text-ink border-b border-line">시그니처 메뉴</a>
-      <a href="#location" class="py-4 text-lg font-medium text-ink border-b border-line">이용 안내 · 오시는 길</a>
       <a href="https://booking.naver.com/" target="_blank" rel="noopener" class="btn mt-5 w-full bg-orange text-onorange">네이버 예약하기</a>
     </nav>
   </div>
@@ -221,7 +204,7 @@
         <p class="text-[14px] text-muted">모든 디저트는 당일 생산 · 소진 시 마감</p>
       </div>
 
-      <div class="mt-10 grid gap-x-5 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="mt-10 grid gap-x-6 gap-y-10 md:grid-cols-3">
         <!-- 카드 1 -->
         <article class="menu-card flex flex-col">
           <div class="ph aspect-[4/5] rounded-[24px]">
@@ -250,18 +233,6 @@
         <!-- 카드 3 -->
         <article class="menu-card flex flex-col">
           <div class="ph aspect-[4/5] rounded-[24px]">
-            <img src="https://images.unsplash.com/photo-1515251256758-720a46104dcd?auto=format&fit=crop&w=800&q=80" alt="오렌지와 과일을 올린 브런치 볼" loading="lazy" onerror="this.remove()">
-          </div>
-          <div class="mt-4 flex items-baseline justify-between gap-3">
-            <h3 class="text-[18px] font-semibold">시트러스 요거트 볼</h3>
-            <span class="num shrink-0 text-[17px] font-semibold text-orange">12,000</span>
-          </div>
-          <p class="mt-1.5 text-[14px] leading-relaxed text-muted">그릭요거트, 수제 그래놀라, 제철 과일. 브런치 시간(11–15시) 한정.</p>
-        </article>
-
-        <!-- 카드 4 -->
-        <article class="menu-card flex flex-col">
-          <div class="ph aspect-[4/5] rounded-[24px]">
             <img src="https://images.unsplash.com/photo-1594975631657-904804a44e4d?auto=format&fit=crop&w=800&q=80" alt="얼음을 넣은 오렌지 음료" loading="lazy" onerror="this.remove()">
           </div>
           <div class="mt-4 flex items-baseline justify-between gap-3">
@@ -276,83 +247,9 @@
     </div>
   </section>
 
-  <!-- ================= 5. INFO & LOCATION ================= -->
-  <section id="location" class="gutter py-20 md:py-28 scroll-mt-16">
-    <div class="wrap">
-      <p class="eyebrow text-orange">Visit</p>
-      <h2 class="mt-3 font-display text-[32px] leading-tight md:text-[44px]">이용 안내 · 오시는 길</h2>
-
-      <div class="mt-10 grid gap-8 md:grid-cols-2 md:gap-12">
-        <ul class="flex flex-col">
-          <li class="flex gap-4 border-b border-line py-5">
-            <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-orange" style="background: color-mix(in srgb, var(--orange) 12%, transparent);">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-            </span>
-            <div class="min-w-0">
-              <p class="text-[13px] text-muted">영업시간</p>
-              <p class="num mt-0.5 text-[16px] font-semibold">화–일 11:00 – 21:00</p>
-              <p class="mt-0.5 text-[13px] text-muted">라스트오더 20:30</p>
-            </div>
-          </li>
-          <li class="flex gap-4 border-b border-line py-5">
-            <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-orange" style="background: color-mix(in srgb, var(--orange) 12%, transparent);">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 8h1a4 4 0 0 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4z"/><path d="M6 2v3M10 2v3M14 2v3"/></svg>
-            </span>
-            <div class="min-w-0">
-              <p class="text-[13px] text-muted">브레이크타임</p>
-              <p class="num mt-0.5 text-[16px] font-semibold">평일 15:30 – 17:00</p>
-              <p class="mt-0.5 text-[13px] text-muted">주말은 브레이크 없이 운영</p>
-            </div>
-          </li>
-          <li class="flex gap-4 border-b border-line py-5">
-            <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-orange" style="background: color-mix(in srgb, var(--orange) 12%, transparent);">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4M9 14l6 4M15 14l-6 4"/></svg>
-            </span>
-            <div class="min-w-0">
-              <p class="text-[13px] text-muted">정기휴무</p>
-              <p class="mt-0.5 text-[16px] font-semibold">매주 월요일</p>
-              <p class="mt-0.5 text-[13px] text-muted">임시휴무는 인스타그램에 공지</p>
-            </div>
-          </li>
-          <li class="flex gap-4 py-5">
-            <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-orange" style="background: color-mix(in srgb, var(--orange) 12%, transparent);">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 17V7h4a3 3 0 0 1 0 6H9"/></svg>
-            </span>
-            <div class="min-w-0">
-              <p class="text-[13px] text-muted">주차 안내</p>
-              <p class="mt-0.5 text-[16px] font-semibold">건물 뒤 전용 3대 · 1시간 무료</p>
-              <p class="mt-0.5 text-[13px] text-muted">만차 시 성수 공영주차장(도보 3분) 이용</p>
-            </div>
-          </li>
-        </ul>
-
-        <div class="flex flex-col gap-4">
-          <div class="map relative aspect-[4/3] w-full overflow-hidden rounded-[24px] border border-line" role="img" aria-label="매장 위치 약도: 성수이로 7길, 성수역 3번 출구 도보 5분">
-            <span class="absolute left-[8%] top-[10%] rounded-full px-3 py-1 text-[12px] font-semibold" style="background: #fff; color:#1f2a22;">성수역 3번 출구</span>
-            <span class="absolute bottom-[8%] right-[6%] text-[12px] font-medium" style="color:#5b6555;">성수이로 7길</span>
-            <div class="pin absolute left-[52%] top-[64%] flex flex-col items-center" style="transform: translate(-50%, -100%);">
-              <span class="whitespace-nowrap rounded-full bg-orange px-3 py-1.5 text-[13px] font-semibold text-onorange shadow-lg">오렌지 다이닝</span>
-              <span class="mt-1 h-3 w-3 rounded-full border-2 border-white bg-orange shadow"></span>
-            </div>
-          </div>
-          <div>
-            <p class="text-[16px] font-semibold">서울 성동구 성수이로7길 12, 1층</p>
-            <p class="mt-1 text-[14px] text-muted">2호선 성수역 3번 출구에서 도보 5분</p>
-          </div>
-          <div class="grid grid-cols-2 gap-3">
-            <a href="https://map.naver.com/p/search/%EC%84%B1%EC%88%98%EC%9D%B4%EB%A1%9C7%EA%B8%B8%2012" target="_blank" rel="noopener" class="btn w-full bg-ink" style="color: var(--bg);">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l18-8-8 18-2-8z"/></svg>
-              길찾기
-            </a>
-            <a href="tel:0212345678" class="btn w-full border border-line text-ink num">02-1234-5678</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 </main>
 
-<!-- ================= 6. FOOTER ================= -->
+<!-- ================= 5. FOOTER ================= -->
 <footer class="gutter border-t border-line pt-14 pb-32 md:pb-14" style="background: var(--surface);">
   <div class="wrap flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
     <div>
