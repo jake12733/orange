@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>오렌지 다이닝</title>
+<meta name="description" content="성수동 수제 디저트 & 브런치 다이닝, 오렌지 다이닝">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=IBM+Plex+Sans+KR:wght@400;500;600&family=DM+Serif+Display:ital@0;1&display=swap">
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          bg: 'var(--bg)', surface: 'var(--surface)', ink: 'var(--ink)',
+          muted: 'var(--muted)', line: 'var(--line)', orange: 'var(--orange)',
+          leaf: 'var(--leaf)', onorange: 'var(--on-orange)'
+        },
+        fontFamily: {
+          display: ['"Bagel Fat One"', '"IBM Plex Sans KR"', 'system-ui', 'sans-serif'],
+          body: ['"IBM Plex Sans KR"', '"Apple SD Gothic Neo"', '"Malgun Gothic"', 'system-ui', 'sans-serif'],
+          serif: ['"DM Serif Display"', 'Georgia', 'serif']
+        }
+      }
+    }
+  }
+</script>
+<style>
+  /* Layout: 모바일 퍼스트 원페이지 — 사진 중심 세로 흐름, 하단 고정 예약바, 데스크톱에서 2~4열로 확장 */
+  :root {
+    --bg: #fbf8f3;          /* 살짝 따뜻한 오프화이트 */
+    --surface: #ffffff;
+    --ink: #1f2a22;         /* 올리브 잎 계열 딥그린 잉크 */
+    --muted: #66705f;
+    --line: #e6e0d4;
+    --orange: #f2661c;      /* 탠저린 */
+    --leaf: #3f6b45;        /* 오렌지 잎 그린 */
+    --on-orange: #ffffff;
+    --hero-ink: #ffffff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #141814; --surface: #1c221c; --ink: #f1ede4; --muted: #a8b0a0;
+      --line: #2e362d; --orange: #ff7a33; --leaf: #8fbf8a; --on-orange: #1a1206;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #141814; --surface: #1c221c; --ink: #f1ede4; --muted: #a8b0a0;
+    --line: #2e362d; --orange: #ff7a33; --leaf: #8fbf8a; --on-orange: #1a1206;
+    color-scheme: dark;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--ink); font-family: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 60; background: var(--bg); }
+
+  .gutter { padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+  .wrap { max-width: 1120px; margin-inline: auto; }
+  h1, h2, h3 { text-wrap: balance; }
+  .eyebrow { letter-spacing: .18em; text-transform: uppercase; font-size: 11px; font-weight: 600; }
+  .num { font-variant-numeric: tabular-nums; }
+
+  /* 이미지가 로드되지 않아도 예쁘게 보이도록 하는 그라데이션 바탕 */
+  .ph { background: linear-gradient(135deg, #f6a15b 0%, #f2661c 45%, #c94a12 100%); position: relative; overflow: hidden; }
+  .ph-soft { background: linear-gradient(160deg, #f3e3cf 0%, #e9c9a3 100%); position: relative; overflow: hidden; }
+  .ph img, .ph-soft img { width: 100%; height: 100%; object-fit: cover; display: block; max-width: 100%; }
+
+  .hero-shade { background: linear-gradient(180deg, rgba(20,24,20,.15) 0%, rgba(20,24,20,.35) 45%, rgba(20,24,20,.82) 100%); }
+
+  /* 오렌지 슬라이스 모티프 */
+  .slice { width: 64px; height: 64px; border-radius: 50%; background:
+    repeating-conic-gradient(from 0deg, var(--orange) 0 26deg, #ffd3ae 26deg 30deg);
+    box-shadow: inset 0 0 0 5px #ffd3ae, 0 0 0 4px var(--orange); }
+
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 52px; padding: 0 22px; border-radius: 999px; font-weight: 600; font-size: 15px; transition: transform .2s ease, background-color .2s ease, color .2s ease; }
+  .btn:active { transform: scale(.97); }
+  .btn:focus-visible, a:focus-visible, button:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; }
+
+  .menu-card img { transition: transform .6s cubic-bezier(.2,.7,.2,1); }
+  .menu-card:hover img { transform: scale(1.05); }
+
+  .map { background-color: #e9e4d8;
+    background-image:
+      linear-gradient(90deg, transparent 47%, #fff 47%, #fff 53%, transparent 53%),
+      linear-gradient(0deg, transparent 62%, #fff 62%, #fff 67%, transparent 67%),
+      linear-gradient(28deg, transparent 30%, #f7f3ea 30%, #f7f3ea 33%, transparent 33%),
+      linear-gradient(#d7e4cf, #d7e4cf);
+    background-size: 100% 100%, 100% 100%, 100% 100%, 34% 30%;
+    background-position: 0 0, 0 0, 0 0, 90% 12%;
+    background-repeat: no-repeat; }
+  :root[data-theme="dark"] .map { filter: brightness(.72) saturate(.9); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .map { filter: brightness(.72) saturate(.9); } }
+  .pin { animation: bob 2.4s ease-in-out infinite; }
+  @keyframes bob { 0%,100% { transform: translate(-50%, -100%); } 50% { transform: translate(-50%, -112%); } }
+
+  .rise { animation: rise .8s cubic-bezier(.2,.7,.2,1) both; }
+  .rise-2 { animation-delay: .12s; } .rise-3 { animation-delay: .24s; }
+  @keyframes rise { from { transform: translateY(14px); opacity: .001; } to { transform: none; opacity: 1; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .rise, .pin { animation: none; }
+    .pin { transform: translate(-50%, -100%); }
+    .menu-card img { transition: none; }
+  }
+
+  .bottom-bar { padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px)); }
+</style>
+
+</head>
+<body>
+
+<!-- ================= 1. HEADER / GNB ================= -->
+<header id="top" class="sticky z-50 border-b border-line" style="top: env(safe-area-inset-top, 0px); background: var(--bg);">
+  <div class="gutter">
+    <div class="wrap flex h-16 items-center justify-between">
+      <a href="#top" class="flex items-center gap-2" aria-label="오렌지 다이닝 홈">
+        <span class="inline-block h-7 w-7 rounded-full" style="background: radial-gradient(circle at 35% 35%, #ffb27a, var(--orange) 60%);"></span>
+        <span class="font-display text-[22px] leading-none text-ink">오렌지 다이닝</span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-8 text-[15px] font-medium text-ink" aria-label="주요 메뉴">
+        <a href="#about" class="hover:text-orange transition-colors">브랜드</a>
+        <a href="#menu" class="hover:text-orange transition-colors">메뉴</a>
+        <a href="#location" class="hover:text-orange transition-colors">오시는 길</a>
+        <a href="https://booking.naver.com/" target="_blank" rel="noopener" class="btn !min-h-[42px] !px-5 bg-orange text-onorange">예약하기</a>
+      </nav>
+
+      <button id="menuBtn" type="button" class="md:hidden -mr-2 flex h-11 w-11 items-center justify-center rounded-full text-ink" aria-controls="mobileNav" aria-expanded="false" aria-label="메뉴 열기">
+        <svg id="iconOpen" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+        <svg id="iconClose" hidden width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- 모바일 메뉴 -->
+  <div id="mobileNav" hidden class="md:hidden border-t border-line" style="background: var(--bg);">
+    <nav class="gutter py-4 flex flex-col" aria-label="모바일 메뉴">
+      <a href="#about" class="py-4 text-lg font-medium text-ink border-b border-line">브랜드 이야기</a>
+      <a href="#menu" class="py-4 text-lg font-medium text-ink border-b border-line">시그니처 메뉴</a>
+      <a href="#location" class="py-4 text-lg font-medium text-ink border-b border-line">이용 안내 · 오시는 길</a>
+      <a href="https://booking.naver.com/" target="_blank" rel="noopener" class="btn mt-5 w-full bg-orange text-onorange">네이버 예약하기</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- ================= 2. HERO ================= -->
+  <section class="relative ph" style="min-height: 580px;" aria-label="메인">
+    <img class="absolute inset-0 h-full w-full object-cover" src="https://images.unsplash.com/photo-1741265805852-32186a6d0dd3?auto=format&fit=crop&w=1600&q=80" alt="햇살이 드는 오렌지 다이닝 매장 내부" onerror="this.remove()">
+    <div class="absolute inset-0 hero-shade"></div>
+
+    <div class="relative gutter">
+      <div class="wrap flex flex-col justify-end pt-36 pb-12 md:pb-20" style="min-height: 580px; color: var(--hero-ink);">
+        <p class="eyebrow rise opacity-90">Seongsu · Since 2021</p>
+        <h1 class="rise rise-2 mt-4 font-display text-[44px] leading-[1.08] sm:text-6xl md:text-7xl">
+          오늘 짠 오렌지로,<br>오늘의 디저트를.
+        </h1>
+        <p class="rise rise-3 mt-5 max-w-md text-[16px] leading-relaxed opacity-90">
+          제주 하우스 귤을 매일 아침 직접 짜고 졸여 만드는 수제 디저트 &amp; 브런치 다이닝.
+        </p>
+        <div class="rise rise-3 mt-8 flex flex-col gap-3 sm:flex-row">
+          <a href="#menu" class="btn bg-orange text-onorange sm:w-auto w-full">시그니처 메뉴 보기</a>
+          <a href="https://booking.naver.com/" target="_blank" rel="noopener" class="btn w-full sm:w-auto border border-white/70 text-white hover:bg-white hover:text-[#1f2a22]">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1.1-4.9A8 8 0 1 1 21 12z"/></svg>
+            네이버 톡톡 · 예약하기
+          </a>
+        </div>
+        <p class="mt-6 text-[13px] opacity-80 num">오늘의 귤 당도 <b class="font-semibold">13.2 Brix</b> · 제주 서귀포 효돈 농가</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 3. ABOUT ================= -->
+  <section id="about" class="gutter py-20 md:py-28 scroll-mt-16">
+    <div class="wrap grid items-center gap-12 md:grid-cols-2 md:gap-16">
+      <div class="min-w-0">
+        <p class="eyebrow text-orange">Our Story</p>
+        <h2 class="mt-3 font-display text-[32px] leading-tight md:text-[44px]">작은 귤 하나에<br>하루치 정성을.</h2>
+        <p class="mt-6 max-w-[34ch] text-[16px] leading-[1.85] text-muted">
+          설탕보다 과일의 단맛을 믿습니다. 우리는 매일 아침 제주에서 올라온 귤을 손으로 껍질 벗기고, 그날 쓸 만큼만 졸입니다.
+          창가 자리에 앉아 천천히 머물다 가세요. 오렌지 다이닝은 그런 오후를 위해 만든 공간입니다.
+        </p>
+        <div class="mt-8 flex items-center gap-5">
+          <div class="slice shrink-0" aria-hidden="true"></div>
+          <dl class="grid grid-cols-3 gap-5 num">
+            <div><dt class="text-[12px] text-muted">하루 착즙</dt><dd class="mt-1 text-xl font-semibold">40kg</dd></div>
+            <div><dt class="text-[12px] text-muted">좌석</dt><dd class="mt-1 text-xl font-semibold">28석</dd></div>
+            <div><dt class="text-[12px] text-muted">파티시에</dt><dd class="mt-1 text-xl font-semibold">3명</dd></div>
+          </dl>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-5 gap-3">
+        <div class="ph-soft col-span-3 aspect-[3/4] rounded-[28px]">
+          <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=80" alt="라떼와 디저트가 놓인 창가 테이블" loading="lazy" onerror="this.remove()">
+        </div>
+        <div class="col-span-2 flex flex-col gap-3 pt-10">
+          <div class="ph aspect-square rounded-full">
+            <img src="https://images.unsplash.com/photo-1681875911808-0f7a0aae49d6?auto=format&fit=crop&w=600&q=80" alt="반으로 자른 신선한 오렌지" loading="lazy" onerror="this.remove()">
+          </div>
+          <div class="ph-soft aspect-[3/4] rounded-[22px]">
+            <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80" alt="매일 아침 굽는 빵" loading="lazy" onerror="this.remove()">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 4. SIGNATURE MENU ================= -->
+  <section id="menu" class="gutter border-t border-line py-20 md:py-28 scroll-mt-16" style="background: var(--surface);">
+    <div class="wrap">
+      <div class="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p class="eyebrow text-orange">Signature</p>
+          <h2 class="mt-3 font-display text-[32px] leading-tight md:text-[44px]">이것만은 꼭 드셔보세요</h2>
+        </div>
+        <p class="text-[14px] text-muted">모든 디저트는 당일 생산 · 소진 시 마감</p>
+      </div>
+
+      <div class="mt-10 grid gap-x-5 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+        <!-- 카드 1 -->
+        <article class="menu-card flex flex-col">
+          <div class="ph aspect-[4/5] rounded-[24px]">
+            <img src="https://images.unsplash.com/photo-1761637604809-735817ea2bd2?auto=format&fit=crop&w=800&q=80" alt="생크림을 층층이 올린 케이크 한 조각" loading="lazy" onerror="this.remove()">
+            <span class="absolute left-3 top-3 rounded-full bg-orange px-3 py-1 text-[12px] font-semibold text-onorange">BEST 1</span>
+          </div>
+          <div class="mt-4 flex items-baseline justify-between gap-3">
+            <h3 class="text-[18px] font-semibold">통귤 크림 케이크</h3>
+            <span class="num shrink-0 text-[17px] font-semibold text-orange">8,500</span>
+          </div>
+          <p class="mt-1.5 text-[14px] leading-relaxed text-muted">귤 콩피를 통째로 넣은 생크림 케이크. 상큼함과 부드러움이 반반.</p>
+        </article>
+
+        <!-- 카드 2 -->
+        <article class="menu-card flex flex-col">
+          <div class="ph aspect-[4/5] rounded-[24px]">
+            <img src="https://images.unsplash.com/photo-1705354125827-927feb31053e?auto=format&fit=crop&w=800&q=80" alt="오렌지와 아몬드를 올린 타르트" loading="lazy" onerror="this.remove()">
+          </div>
+          <div class="mt-4 flex items-baseline justify-between gap-3">
+            <h3 class="text-[18px] font-semibold">오렌지 커드 타르트</h3>
+            <span class="num shrink-0 text-[17px] font-semibold text-orange">7,800</span>
+          </div>
+          <p class="mt-1.5 text-[14px] leading-relaxed text-muted">버터 사블레 위에 직접 쑨 오렌지 커드와 이탈리안 머랭을 토치로.</p>
+        </article>
+
+        <!-- 카드 3 -->
+        <article class="menu-card flex flex-col">
+          <div class="ph aspect-[4/5] rounded-[24px]">
+            <img src="https://images.unsplash.com/photo-1515251256758-720a46104dcd?auto=format&fit=crop&w=800&q=80" alt="오렌지와 과일을 올린 브런치 볼" loading="lazy" onerror="this.remove()">
+          </div>
+          <div class="mt-4 flex items-baseline justify-between gap-3">
+            <h3 class="text-[18px] font-semibold">시트러스 요거트 볼</h3>
+            <span class="num shrink-0 text-[17px] font-semibold text-orange">12,000</span>
+          </div>
+          <p class="mt-1.5 text-[14px] leading-relaxed text-muted">그릭요거트, 수제 그래놀라, 제철 과일. 브런치 시간(11–15시) 한정.</p>
+        </article>
+
+        <!-- 카드 4 -->
+        <article class="menu-card flex flex-col">
+          <div class="ph aspect-[4/5] rounded-[24px]">
+            <img src="https://images.unsplash.com/photo-1594975631657-904804a44e4d?auto=format&fit=crop&w=800&q=80" alt="얼음을 넣은 오렌지 음료" loading="lazy" onerror="this.remove()">
+          </div>
+          <div class="mt-4 flex items-baseline justify-between gap-3">
+            <h3 class="text-[18px] font-semibold">오렌지 비앙코</h3>
+            <span class="num shrink-0 text-[17px] font-semibold text-orange">6,500</span>
+          </div>
+          <p class="mt-1.5 text-[14px] leading-relaxed text-muted">착즙 오렌지 위에 우유와 에스프레소를 층층이. 저으면 맛이 바뀌어요.</p>
+        </article>
+      </div>
+
+      <p class="mt-10 text-center text-[13px] text-muted">가격 단위: 원 · 전 메뉴 포장 가능 (+500원 친환경 용기)</p>
+    </div>
+  </section>
+
+  <!-- ================= 5. INFO & LOCATION ================= -->
+  <section id="location" class="gutter py-20 md:py-28 scroll-mt-16">
+    <div class="wrap">
+      <p class="eyebrow text-orange">Visit</p>
+      <h2 class="mt-3 font-display text-[32px] leading-tight md:text-[44px]">이용 안내 · 오시는 길</h2>
+
+      <div class="mt-10 grid gap-8 md:grid-cols-2 md:gap-12">
+        <ul class="flex flex-col">
+          <li class="flex gap-4 border-b border-line py-5">
+            <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-orange" style="background: color-mix(in srgb, var(--orange) 12%, transparent);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            </span>
+            <div class="min-w-0">
+              <p class="text-[13px] text-muted">영업시간</p>
+              <p class="num mt-0.5 text-[16px] font-semibold">화–일 11:00 – 21:00</p>
+              <p class="mt-0.5 text-[13px] text-muted">라스트오더 20:30</p>
+            </div>
+          </li>
+          <li class="flex gap-4 border-b border-line py-5">
+            <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-orange" style="background: color-mix(in srgb, var(--orange) 12%, transparent);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 8h1a4 4 0 0 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4z"/><path d="M6 2v3M10 2v3M14 2v3"/></svg>
+            </span>
+            <div class="min-w-0">
+              <p class="text-[13px] text-muted">브레이크타임</p>
+              <p class="num mt-0.5 text-[16px] font-semibold">평일 15:30 – 17:00</p>
+              <p class="mt-0.5 text-[13px] text-muted">주말은 브레이크 없이 운영</p>
+            </div>
+          </li>
+          <li class="flex gap-4 border-b border-line py-5">
+            <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-orange" style="background: color-mix(in srgb, var(--orange) 12%, transparent);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4M9 14l6 4M15 14l-6 4"/></svg>
+            </span>
+            <div class="min-w-0">
+              <p class="text-[13px] text-muted">정기휴무</p>
+              <p class="mt-0.5 text-[16px] font-semibold">매주 월요일</p>
+              <p class="mt-0.5 text-[13px] text-muted">임시휴무는 인스타그램에 공지</p>
+            </div>
+          </li>
+          <li class="flex gap-4 py-5">
+            <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-orange" style="background: color-mix(in srgb, var(--orange) 12%, transparent);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 17V7h4a3 3 0 0 1 0 6H9"/></svg>
+            </span>
+            <div class="min-w-0">
+              <p class="text-[13px] text-muted">주차 안내</p>
+              <p class="mt-0.5 text-[16px] font-semibold">건물 뒤 전용 3대 · 1시간 무료</p>
+              <p class="mt-0.5 text-[13px] text-muted">만차 시 성수 공영주차장(도보 3분) 이용</p>
+            </div>
+          </li>
+        </ul>
+
+        <div class="flex flex-col gap-4">
+          <div class="map relative aspect-[4/3] w-full overflow-hidden rounded-[24px] border border-line" role="img" aria-label="매장 위치 약도: 성수이로 7길, 성수역 3번 출구 도보 5분">
+            <span class="absolute left-[8%] top-[10%] rounded-full px-3 py-1 text-[12px] font-semibold" style="background: #fff; color:#1f2a22;">성수역 3번 출구</span>
+            <span class="absolute bottom-[8%] right-[6%] text-[12px] font-medium" style="color:#5b6555;">성수이로 7길</span>
+            <div class="pin absolute left-[52%] top-[64%] flex flex-col items-center" style="transform: translate(-50%, -100%);">
+              <span class="whitespace-nowrap rounded-full bg-orange px-3 py-1.5 text-[13px] font-semibold text-onorange shadow-lg">오렌지 다이닝</span>
+              <span class="mt-1 h-3 w-3 rounded-full border-2 border-white bg-orange shadow"></span>
+            </div>
+          </div>
+          <div>
+            <p class="text-[16px] font-semibold">서울 성동구 성수이로7길 12, 1층</p>
+            <p class="mt-1 text-[14px] text-muted">2호선 성수역 3번 출구에서 도보 5분</p>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <a href="https://map.naver.com/p/search/%EC%84%B1%EC%88%98%EC%9D%B4%EB%A1%9C7%EA%B8%B8%2012" target="_blank" rel="noopener" class="btn w-full bg-ink" style="color: var(--bg);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l18-8-8 18-2-8z"/></svg>
+              길찾기
+            </a>
+            <a href="tel:0212345678" class="btn w-full border border-line text-ink num">02-1234-5678</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ================= 6. FOOTER ================= -->
+<footer class="gutter border-t border-line pt-14 pb-32 md:pb-14" style="background: var(--surface);">
+  <div class="wrap flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+    <div>
+      <p class="font-display text-[26px] leading-none">오렌지 다이닝</p>
+      <dl class="mt-5 grid grid-cols-[auto,1fr] gap-x-4 gap-y-1.5 text-[13px] text-muted num">
+        <dt>대표</dt><dd>김오렌</dd>
+        <dt>사업자등록번호</dt><dd>123-45-67890</dd>
+        <dt>주소</dt><dd>서울 성동구 성수이로7길 12, 1층</dd>
+        <dt>전화</dt><dd>02-1234-5678</dd>
+      </dl>
+    </div>
+    <div class="flex flex-col gap-4 md:items-end">
+      <a href="https://instagram.com/" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-[15px] font-semibold text-ink hover:text-orange transition-colors" aria-label="인스타그램 @orange.dining">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        @orange.dining
+      </a>
+      <p class="text-[12px] text-muted">© 2026 Orange Dining. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- 모바일 하단 고정 CTA 바 (전환율용) -->
+<div class="bottom-bar md:hidden fixed inset-x-0 bottom-0 z-40 border-t border-line gutter pt-2.5" style="background: var(--bg);">
+  <div class="grid grid-cols-[auto,1fr] gap-2.5">
+    <a href="tel:0212345678" class="btn border border-line text-ink !px-4" aria-label="전화 걸기 02-1234-5678">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>
+    </a>
+    <a href="https://booking.naver.com/" target="_blank" rel="noopener" class="btn bg-orange text-onorange w-full">네이버 예약하기</a>
+  </div>
+</div>
+
+<script>
+  // 모바일 메뉴 토글
+  (function () {
+    var btn = document.getElementById('menuBtn');
+    var nav = document.getElementById('mobileNav');
+    var io = document.getElementById('iconOpen');
+    var ic = document.getElementById('iconClose');
+    function setOpen(open) {
+      nav.hidden = !open; io.hidden = open; ic.hidden = !open;
+      btn.setAttribute('aria-expanded', String(open));
+      btn.setAttribute('aria-label', open ? '메뉴 닫기' : '메뉴 열기');
+    }
+    btn.addEventListener('click', function () { setOpen(nav.hidden); });
+    nav.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { setOpen(false); }); });
+    window.addEventListener('resize', function () { if (window.innerWidth >= 768) setOpen(false); });
+  })();
+
+  // 부드러운 스크롤 (고정 헤더 높이만큼 보정)
+  (function () {
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        var id = a.getAttribute('href');
+        if (id.length < 2) { e.preventDefault(); window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }); return; }
+        var el = document.querySelector(id);
+        if (!el) return;
+        e.preventDefault();
+        var header = document.querySelector('header');
+        var y = el.getBoundingClientRect().top + window.pageYOffset - (header ? header.offsetHeight : 0) + 1;
+        window.scrollTo({ top: y, behavior: reduce ? 'auto' : 'smooth' });
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>
